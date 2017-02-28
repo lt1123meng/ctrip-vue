@@ -1,0 +1,63 @@
+{
+  "ResponseStatus": {
+    "Timestamp": "/Date(1488175134984+0800)/",
+    "Ack": "Success",
+    "Errors": [],
+    "Extension": [
+      {
+        "Id": "CLOGGING_TRACE_ID",
+        "Value": "5472042641993565289"
+      }
+    ]
+  },
+  "IsSuccess": true,
+  "ResultCode": 0,
+  "ResultMsg": "请求成功",
+  "Items": [
+    {
+      "Position": 4,
+      "ActivityID": 10,
+      "Subject": "",
+      "Subtitle": "",
+      "ImageURL": "https://pages.ctrip.com/commerce/rk/2017/02/jp/jp_ad02_320b.jpg",
+      "LinkType": 0,
+      "Navigator": "https://contents.ctrip.com/activitysetupapp/mkt/index/17duobao?popup=close"
+    },
+    {
+      "Position": 5,
+      "ActivityID": 11,
+      "Subject": "",
+      "Subtitle": "",
+      "ImageURL": "https://images3.c-ctrip.com/rk/201609/hq_320x160a_AD03.jpg",
+      "LinkType": 0,
+      "Navigator": "https://smarket.ctrip.com/webapp/promocode/add?source=5 "
+    },
+    {
+      "Position": 6,
+      "ActivityID": 12,
+      "Subject": "",
+      "Subtitle": "",
+      "ImageURL": "https://images3.c-ctrip.com/rk/201702/cr320-AD03.jpg",
+      "LinkType": 0,
+      "Navigator": "https://contents.ctrip.com/activitysetupapp/mkt/index/17redpocket?popup=close"
+    },
+    {
+      "Position": 7,
+      "ActivityID": 13,
+      "Subject": "",
+      "Subtitle": "",
+      "ImageURL": "https://pages.c-ctrip.com/commerce/promote/201701/other/yplby/app_home_ad01_qx320160.jpg",
+      "LinkType": 0,
+      "Navigator": "https://pages.ctrip.com/commerce/promote/201701/other/yphj/apph5/index.html?openapp=3"
+    },
+    {
+      "Position": 8,
+      "ActivityID": 14,
+      "Subject": "",
+      "Subtitle": "",
+      "ImageURL": "https://images3.c-ctrip.com/rk/201702/lxl320-AD03.jpg",
+      "LinkType": 0,
+      "Navigator": "https://contents.ctrip.com/signchannelapp/Index?popup=close"
+    }
+  ]
+}

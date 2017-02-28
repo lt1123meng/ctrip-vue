@@ -1,0 +1,66 @@
+{
+  "ReturnCode": 0,
+  "HotSaleCount": 3,
+  "CityName": "上海",
+  "ServerCurrentTime": "2017-02-27 14:05:53",
+  "HotSaleProductList": [
+    {
+      "ProductID": 5329207,
+      "ProductType": "今日爆款",
+      "ProductName": "泰国曼谷+芭提雅6日5晚跟团游(4钻)·【限量特惠】直飞无自费 快艇出海 升国五",
+      "OriginalPrice": 5999,
+      "SalesPrice": 2679,
+      "SavedPrice": 3320,
+      "Discount": 4.5,
+      "PreferentialDescription": "4.5折",
+      "Stock": "席位充足",
+      "ImgURL": "http://images3.c-ctrip.com/dj/dest_pics/360/359.jpg",
+      "DetailURL": "/tour/index.html#detail?productId=5329207&saleCityId=2&departCityId=2",
+      "IsSoldOut": false,
+      "SaleBeginTime": "2016-05-06 15:08:00",
+      "SaleEndTime": "2017-12-19 15:08:00"
+    },
+    {
+      "ProductID": 1940645,
+      "ProductType": "今日爆款",
+      "ProductName": "毛里求斯8日5晚自由行·【携程自营专属特价】 威斯汀 早+晚 7999",
+      "OriginalPrice": 14999,
+      "SalesPrice": 7999,
+      "SavedPrice": 7000,
+      "Discount": 5.3,
+      "PreferentialDescription": "省￥7000",
+      "Stock": "席位充足",
+      "ImgURL": "http://images3.c-ctrip.com/dj/dest_pics/360/785.jpg",
+      "IsSoldOut": false,
+      "SaleBeginTime": "2017-02-24 15:44:00",
+      "SaleEndTime": "2017-12-31 15:44:00"
+    },
+    {
+      "ProductID": 15803576,
+      "ProductType": "今日爆款",
+      "ProductName": "马来西亚沙巴7日5晚半自助游·【特价1499】东航直飞往返机票+赠接送+保险",
+      "OriginalPrice": 3499,
+      "SalesPrice": 1499,
+      "SavedPrice": 2000,
+      "Discount": 4.3,
+      "PreferentialDescription": "4.3折",
+      "Stock": "席位充足",
+      "ImgURL": "http://images3.c-ctrip.com/dj/dest_pics/360/67.jpg",
+      "DetailURL": "/tour/index.html#detail?productId=15803576&saleCityId=2&departCityId=2",
+      "IsSoldOut": false,
+      "SaleBeginTime": "2017-02-22 18:05:00",
+      "SaleEndTime": "2017-03-10 18:05:00"
+    }
+  ],
+  "ResponseStatus": {
+    "Timestamp": "/Date(1488175553804+0800)/",
+    "Ack": "Success",
+    "Errors": [],
+    "Extension": [
+      {
+        "Id": "CLOGGING_TRACE_ID",
+        "Value": "1141906386696436974"
+      }
+    ]
+  }
+}

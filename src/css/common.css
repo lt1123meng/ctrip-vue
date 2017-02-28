@@ -1,0 +1,45 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: Arial, "Lucida Grande", Verdana, "Microsoft YaHei", hei;
+  color: #333;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-overflow-scrolling: touch;
+  -webkit-text-size-adjust: none;
+  background: #efefef;
+}
+
+body, p {
+  padding: 0;
+  margin: 0;
+  font-size: 11pt;
+}
+
+div, footer {
+  position: relative;
+  box-sizing: border-box;
+}
+
+input, textarea {
+  outline: none
+}
+
+.empty {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 100px;
+  text-align: center
+}
+img{
+  width: 100%;
+}
