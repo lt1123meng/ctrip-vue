@@ -43,3 +43,17 @@ input, textarea {
 img{
   width: 100%;
 }
+a[href]{
+  text-decoration: none;
+  color: #333;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+/*显示两行文本，超出用...代替*/
+._twoLine {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
