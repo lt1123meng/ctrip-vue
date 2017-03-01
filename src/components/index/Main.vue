@@ -1,110 +1,154 @@
 <template>
   <div>
-    <header class="header" :style="{ backgroundColor:bgColor }">
-      <span class="scanning el-icon-menu" :style="{ color:iconColor }"></span>
-      <span class="message el-icon-menu" :style="{ color:iconColor }"></span>
-      <div class="searchBox" :style="{ backgroundColor:bgSearch }"><span class="search el-icon-menu"></span><input
-        type="text" placeholder="搜索目的地/景点"></div>
-    </header>
-    <slider :items="items" :speed="2" :delay="3" :pause="true" :autoplay="true" :dots="true" :arrows="true"></slider>
-    <div class="contentBox">
-      <div class="navBox">
-        <el-row>
-          <el-col :span="8">
-            <a>酒店</a>
-          </el-col>
-          <el-col :span="8">
-            <a>
-              海外酒店
-            </a>
-            <a>
-              特价酒店
-            </a>
-          </el-col>
-          <el-col :span="8">
-            <a>
-              团购
-            </a>
-            <a>
-              民宿·客栈
-            </a>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8">
-            <a>机票</a>
-          </el-col>
-          <el-col :span="8">
-            <a>
-              火车票
-            </a>
-            <a>
-              特价机票
-            </a>
-          </el-col>
-          <el-col :span="8">
-            <a>
-              汽车票·船票
-            </a>
-            <a>
-              专车·租车
-            </a>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8">
-            <a>旅游</a>
-          </el-col>
-          <el-col :span="8">
-            <a>
-              目的地攻略
-            </a>
-            <a>
-              周边游
-            </a>
-          </el-col>
-          <el-col :span="8">
-            <a>
-              游轮
-            </a>
-            <a>
-              定制旅行
-            </a>
-          </el-col>
-        </el-row>
-      </div>
-      <p class="title"><span class="el-icon-minus"></span> 特惠专区 <span class="el-icon-minus"></span></p>
-      <div class="hotSale">
-        <div class="hotSale-hd">
-          <span>特卖会</span>
-          <span>领红包再下单<i class="el-icon-arrow-right"></i></span>
+    <div v-if="search">
+      <header class="header" :style="{ backgroundColor:bgColor }">
+        <span class="scanning el-icon-menu" :style="{ color:iconColor }"></span>
+        <span class="message el-icon-menu" :style="{ color:iconColor }"></span>
+        <div class="searchBox" :style="{ backgroundColor:bgSearch }"><span class="search el-icon-menu"></span>
+          <input @focus="searchFocus()" type="text" placeholder="搜索目的地/景点"></div>
+      </header>
+      <slider :items="items" :speed="2" :delay="3" :pause="true" :autoplay="true" :dots="true" :arrows="true"></slider>
+      <div class="contentBox">
+        <div class="navBox">
+          <el-row>
+            <el-col :span="8">
+              <a>酒店</a>
+            </el-col>
+            <el-col :span="8">
+              <a>
+                海外酒店
+              </a>
+              <a>
+                特价酒店
+              </a>
+            </el-col>
+            <el-col :span="8">
+              <a>
+                团购
+              </a>
+              <a>
+                民宿·客栈
+              </a>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="8">
+              <a>机票</a>
+            </el-col>
+            <el-col :span="8">
+              <a>
+                火车票
+              </a>
+              <a>
+                特价机票
+              </a>
+            </el-col>
+            <el-col :span="8">
+              <a>
+                汽车票·船票
+              </a>
+              <a>
+                专车·租车
+              </a>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="8">
+              <a>旅游</a>
+            </el-col>
+            <el-col :span="8">
+              <a>
+                目的地攻略
+              </a>
+              <a>
+                周边游
+              </a>
+            </el-col>
+            <el-col :span="8">
+              <a>
+                游轮
+              </a>
+              <a>
+                定制旅行
+              </a>
+            </el-col>
+          </el-row>
         </div>
-        <div class="hotSale-bd">
-          <div class="empty" v-if="hotSale.length==0">
-            <p v-html="hotSale.length"></p>
-            <span class="el-icon-loading"></span>
+        <p class="title"><span class="el-icon-minus"></span> 特惠专区 <span class="el-icon-minus"></span></p>
+        <div class="hotSale">
+          <div class="hotSale-hd">
+            <span>特卖会</span>
+            <span>领红包再下单<i class="el-icon-arrow-right"></i></span>
           </div>
-          <div v-if="hotSale.length!=0">
-            <el-row>
-              <el-col :span="12">
-                <a v-for="(list,index) in hotSale" v-if="index==0">
-                  <img :src="list.ImgURL">
-                  <p class="_twoLine" v-text="list.ProductName"></p>
-                  <p v-text="'￥'+list.SalesPrice+'起'"></p>
-                </a>
-              </el-col>
-              <el-col :span="12">
-                <el-row>
-                  <el-col :span="24">
-                    <img :src="'http://pic.c-ctrip.com/platform/h5/home/pic-tmh-02.png'">
-                  </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="12"></el-col>
-                  <el-col :span="12"></el-col>
-                </el-row>
-              </el-col>
-            </el-row>
+          <div class="hotSale-bd">
+            <div class="empty" v-if="hotSale.length==0">
+              <p v-html="hotSale.length"></p>
+              <span class="el-icon-loading"></span>
+            </div>
+            <div v-if="hotSale.length!=0">
+              <el-row>
+                <el-col :span="12">
+                  <a v-for="(list,index) in hotSale" v-if="index==0">
+                    <img :src="list.ImgURL">
+                    <p class="_twoLine" v-text="list.ProductName"></p>
+                    <p v-text="'￥'+list.SalesPrice+'起'"></p>
+                  </a>
+                </el-col>
+                <el-col :span="12">
+                  <el-row>
+                    <el-col :span="24">
+                      <img :src="'http://pic.c-ctrip.com/platform/h5/home/pic-tmh-02.png'">
+                    </el-col>
+                  </el-row>
+                  <el-row>
+                    <el-col :span="12"></el-col>
+                    <el-col :span="12"></el-col>
+                  </el-row>
+                </el-col>
+              </el-row>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="!search">
+      <header class="header searchHeader">
+        <span @click="searchFocus()" class="scanning el-icon-arrow-left"></span>
+        <input type="text" placeholder="搜索目的地/景点">
+      </header>
+      <div class="searchCon">
+        <div class="nav">
+          <span>搜索推荐</span>
+        </div>
+        <div class="box">
+          <span class="sign"></span>
+          <div class="content">
+            <el-button>酒店</el-button>
+            <el-button>机票</el-button>
+            <el-button>火车票</el-button>
+            <el-button>渡假</el-button>
+            <el-button>攻略</el-button>
+          </div>
+        </div>
+        <div class="box">
+          <span class="sign"></span>
+          <div class="content">
+            <el-button>香港的酒店</el-button>
+            <el-button>三亚的酒店</el-button>
+            <el-button>石家庄的酒店</el-button>
+            <el-button>上海的酒店</el-button>
+            <el-button>北京的酒店</el-button>
+          </div>
+        </div>
+        <div class="box">
+          <span class="sign"></span>
+          <div class="content">
+            <el-button>石家庄跟团游</el-button>
+            <el-button>石家庄自由行</el-button>
+            <el-button>石家庄景点门票</el-button>
+            <el-button>石家庄一日游</el-button>
+            <el-button>迪士尼游玩</el-button>
+            <el-button>三亚旅游</el-button>
           </div>
         </div>
       </div>
@@ -144,21 +188,19 @@
         bgSearch: '#fff',
         hotSale: {
           'HotSaleProductList': []
-        }
+        },
+        search: true
       }
     },
     beforeCreate: function () {
-      console.log('beforeCreate')
       var thisVm = this
       //      请求  热门
       thisVm.$http.get('json/hotSale.json').then(response => {
         thisVm.$set(thisVm, 'hotSale', response.data.HotSaleProductList)
-        console.log(thisVm)
       }, response => {
       })
     },
     created: function () {
-      console.log('created')
 //        监听滚动事件
       var thisVm = this
       document.onscroll = function () {
@@ -171,7 +213,9 @@
     },
     methods: {
       tap () {
-        console.log('longTap')
+      },
+      searchFocus () {
+        this.search = !this.search
       }
     },
     components: {
@@ -182,10 +226,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .index-box {
-    padding-bottom: 60px;
-  }
-
   /*头部*/
   .header {
     position: fixed;
@@ -196,7 +236,7 @@
     box-sizing: border-box;
   }
 
-  .header .scanning, .header .search {
+  .header .scanning, .header .search, .searchBox span {
     position: absolute;
     top: 10px;
     font-size: 18px;
@@ -326,5 +366,41 @@
   .hotSale .hotSale-bd {
     min-height: 100px;
     padding: 8px 8px 8px 8px;
+  }
+
+  .searchHeader {
+    padding: 4px 8px 4px 40px;
+    border-bottom: 1px solid #aeaeae;
+  }
+
+  .searchHeader input {
+    width: 100%;
+    padding: 0 4px;
+    box-sizing: border-box;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px;
+    border: 1px solid #aeaeae;
+  }
+
+  .searchCon {
+    padding-top: 40px;
+  }
+
+  .searchCon .nav {
+    background-color: #efefef;
+  }
+
+  .searchCon .box {
+    padding: 2px 2px 2px 40px;
+    background-color: #fff;
+  }
+
+  .searchCon .box .content {
+    border-top: 1px solid #aeaeae;
+  }
+  .searchCon .box .el-button {
+    padding: 8px 12px;
+    margin: 4px 0;
   }
 </style>

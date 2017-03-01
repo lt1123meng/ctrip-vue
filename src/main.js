@@ -3,11 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import vueResource from 'vue-resource'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import vueResource from 'vue-resource'
+import vueFinger from 'vue-finger'
 Vue.use(ElementUI)
 Vue.use(vueResource)
+Vue.use(vueFinger)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

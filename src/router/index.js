@@ -4,7 +4,6 @@ import Index from 'components/Index'
 import IndexMain from 'components/index/Main'
 import IndexServer from 'components/index/server'
 Vue.use(Router)
-
 export default new Router({
   routes: [
     {
