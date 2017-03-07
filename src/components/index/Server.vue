@@ -1,5 +1,5 @@
 <template>
-  <div class="index-server">
+  <div class="index_server">
     <header>
       <div class="headerBox">
         <el-row>
@@ -37,13 +37,13 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .index-server {
+  .index_server {
     height: 100%;
     background-color: rgba(89, 0, 111, 0.7);;
   }
 
   /*头部*/
-  header {
+  .index_server header {
     position: fixed;
     top: 0;
     width: 100%;
@@ -51,7 +51,7 @@
     background-color: #9c55af;
   }
 
-  .headerBox {
+  .index_server .headerBox {
     vertical-align: bottom;
     height: 30px;
     width: 60%;
@@ -60,7 +60,7 @@
     color: #fff;
   }
 
-  .headerBox {
+  .index_server .headerBox {
     vertical-align: bottom;
     height: 30px;
     width: 60%;
@@ -69,12 +69,12 @@
     color: #fff;
   }
 
-  .headerBox .el-col {
+  .index_server .headerBox .el-col {
     position: relative;
     height: 30px;
   }
 
-  .headerBox .el-col div {
+  .index_server .headerBox .el-col div {
     width: 100%;
     height: 30px;
     line-height: 30px;
@@ -84,7 +84,7 @@
     line-height: 30px;
   }
 
-  .headerBox .el-col .text {
+  .index_server .headerBox .el-col .text {
     width: 100%;
     height: 100%;
     z-index: 2;
@@ -97,7 +97,7 @@
 
   }
 
-  .headerBox .el-col.active {
+  .index_server .headerBox .el-col.active {
     position: relative;
     height: 38px;
     top: -8px;
@@ -105,7 +105,7 @@
     z-index: 3;
   }
 
-  .headerBox .el-col.active::before {
+  .index_server .headerBox .el-col.active::before {
     content: ''; /* To generate the box */
     position: absolute;
     top: 0;
@@ -122,13 +122,13 @@
     border-top-right-radius: 5px;
   }
 
-  .headerBox .el-col.active:first-of-type::before {
+  .index_server .headerBox .el-col.active:first-of-type::before {
     transform-origin: bottom left;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
   }
 
-  .headerBox .el-col.active:last-of-type::before {
+  .index_server .headerBox .el-col.active:last-of-type::before {
     transform-origin: bottom right;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;

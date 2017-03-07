@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main_box">
     <div v-if="search">
       <header class="header" :style="{ backgroundColor:bgColor }">
         <span class="scanning el-icon-menu" :style="{ color:iconColor }"></span>
@@ -7,7 +7,15 @@
         <div class="searchBox" :style="{ backgroundColor:bgSearch }"><span class="search el-icon-menu"></span>
           <input @focus="searchFocus()" type="text" placeholder="搜索目的地/景点"></div>
       </header>
-      <slider :items="items" :speed="2" :delay="3" :pause="true" :autoplay="true" :dots="true" :arrows="true"></slider>
+      <swiper :options="swiperOption" ref="mySwiperA">
+        <!-- 幻灯内容 -->
+        <swiper-slide v-for="item in items">
+          <img :src="item.src">
+        </swiper-slide>
+        <!-- ... -->
+        <!-- 以下控件元素均为可选（使用具名slot来确定并应用一些操作控件元素） -->
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
       <div class="contentBox">
         <div class="navBox">
           <el-row>
@@ -36,9 +44,7 @@
               <a>机票</a>
             </el-col>
             <el-col :span="8">
-              <a>
-                火车票
-              </a>
+              <router-link to="/ticket/main">火车票</router-link>
               <a>
                 特价机票
               </a>
@@ -86,26 +92,14 @@
               <span class="el-icon-loading"></span>
             </div>
             <div v-if="hotSale.length!=0">
-              <el-row>
-                <el-col :span="12">
-                  <a v-for="(list,index) in hotSale" v-if="index==0">
-                    <img :src="list.ImgURL">
-                    <p class="_twoLine" v-text="list.ProductName"></p>
-                    <p v-text="'￥'+list.SalesPrice+'起'"></p>
-                  </a>
-                </el-col>
-                <el-col :span="12">
-                  <el-row>
-                    <el-col :span="24">
-                      <img :src="'http://pic.c-ctrip.com/platform/h5/home/pic-tmh-02.png'">
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="12"></el-col>
-                    <el-col :span="12"></el-col>
-                  </el-row>
-                </el-col>
-              </el-row>
+              <swiper :options="swiperOption">
+                <swiper-slide v-for="item in hotSale">
+                  <img :src="item.ImgUrl">
+                  <p class="_twoLine" v-text="item.ProductName"></p>
+                  <p class="money"><span v-text="'￥'+item.SalesPrice+'起'"></span> <span
+                    v-text="'省￥'+(item.OriginalPrice-item.SalesPrice)"></span></p>
+                </swiper-slide>
+              </swiper>
             </div>
           </div>
         </div>
@@ -176,12 +170,15 @@
             alt: 'images-3'
           }
         ],
-        sliderinit: {
+        swiperOption: {
+          // 所有配置均为可选（同Swiper配置）
+          // NotNextTick is a component's own property, and if notNextTick is set to true, the component will not instantiate the swiper through NextTick, which means you can get the swiper object the first time (if you need to use the get swiper object to do what Things, then this property must be true)
+          // notNextTick是一个组件自有属性，如果notNextTick设置为true，组件则不会通过NextTick来实例化swiper，也就意味着你可以在第一时间获取到swiper对象（假如你需要使用获取swiper对象来做什么事，那么这个属性一定要是true）
+          notNextTick: true,
           autoplay: 3000,
-          loop: true,
-          direction: 'horizontal',
-          infinite: 1,
-          slidesToScroll: 1
+          pagination: '.swiper-pagination',
+          paginationClickable: true,
+          speed: 1000
         },
         bgColor: 'rgba(0,0,0,0)',
         iconColor: '#fff',
@@ -193,10 +190,13 @@
       }
     },
     beforeCreate: function () {
-      var thisVm = this
       //      请求  热门
-      thisVm.$http.get('json/hotSale.json').then(response => {
-        thisVm.$set(thisVm, 'hotSale', response.data.HotSaleProductList)
+      this.$http.get(this.$root.BaseURI + 'hot/list').then(response => {
+        response = response.data
+        if (response.responseStatus.ack === 'success') {
+          this.hotSale = response.data.hotSaleList
+          console.log(this.hotSale)
+        }
       }, response => {
       })
     },
@@ -226,37 +226,41 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .main_box {
+    padding-bottom: 60px;
+  }
+
   /*头部*/
-  .header {
+  .main_box .header {
     position: fixed;
     width: 100%;
-    z-index: 1;
+    z-index: 2;
     height: 40px;
     padding: 4px 40px;
     box-sizing: border-box;
   }
 
-  .header .scanning, .header .search, .searchBox span {
+  .main_box .header .scanning, .main_box .header .search, .searchBox span {
     position: absolute;
     top: 10px;
     font-size: 18px;
     left: 7px;
   }
 
-  .header .message {
+  .main_box .header .message {
     position: absolute;
     top: 10px;
     font-size: 18px;
     right: 7px;
   }
 
-  .header .searchBox {
+  .main_box .header .searchBox {
     line-height: 32px;
     padding-left: 30px;
     border-radius: 4px;
   }
 
-  .header .search {
+  .main_box .header .search {
     position: absolute;
     top: 8px;
     font-size: 15px;
@@ -264,60 +268,60 @@
     color: #888;
   }
 
-  .header .searchBox input {
+  .main_box .header .searchBox input {
     border: 0;
     height: 32px;
     vertical-align: top;
   }
 
   /*内容区域*/
-  .contentBox {
+  .main_box .contentBox {
     padding: 4px 0;
   }
 
-  .contentBox .title {
+  .main_box .contentBox .title {
     line-height: 35px;
     text-align: center;
   }
 
   /*index.Vue*/
   /*第一个导航*/
-  .contentBox .navBox {
+  .main_box .contentBox .navBox {
     padding: 0 4px;
     color: #fff;
     text-align: center;
   }
 
-  .contentBox .navBox .el-row {
+  .main_box .contentBox .navBox .el-row {
     border-radius: 5px;
     margin-bottom: 4px;
   }
 
-  .contentBox .navBox .el-row:nth-child(1) {
+  .main_box .contentBox .navBox .el-row:nth-child(1) {
     background-color: #ff697a;
   }
 
-  .contentBox .navBox .el-row:nth-child(2) {
+  .main_box .contentBox .navBox .el-row:nth-child(2) {
     background-color: #3d98ff;
   }
 
-  .contentBox .navBox .el-row:nth-child(3) {
+  .main_box .contentBox .navBox .el-row:nth-child(3) {
     background-color: #fc9720;
   }
 
-  .contentBox .navBox .el-row .el-col:nth-child(1) {
+  .main_box .contentBox .navBox .el-row .el-col:nth-child(1) {
     border: 0
   }
 
-  .contentBox .navBox .el-row .el-col {
+  .main_box .contentBox .navBox .el-row .el-col {
     border-left: 1px solid #fff;
   }
 
-  .contentBox .navBox .el-row .el-col a + a {
+  .main_box .contentBox .navBox .el-row .el-col a + a {
     border-top: 1px solid #fff;
   }
 
-  .contentBox .navBox a {
+  .main_box .contentBox .navBox a {
     height: 45px;
     line-height: 45px;
     display: block;
@@ -325,23 +329,23 @@
   }
 
   /*特卖区域*/
-  .hotSale {
+  .main_box .hotSale {
     background-color: #fff;
   }
 
-  .hotSale .hotSale-hd {
+  .main_box .hotSale .hotSale-hd {
     height: 40px;
     border-bottom: 1px solid #ccc;
 
   }
 
-  .hotSale .hotSale-hd span {
+  .main_box .hotSale .hotSale-hd span {
     display: block;
     position: absolute;
     top: 0px;
   }
 
-  .hotSale .hotSale-hd span:first-of-type {
+  .main_box .hotSale .hotSale-hd span:first-of-type {
     left: 6px;
     top: 6px;
     color: #fb520a;
@@ -350,7 +354,7 @@
     font-weight: bold;
   }
 
-  .hotSale .hotSale-hd span:last-of-type {
+  .main_box .hotSale .hotSale-hd span:last-of-type {
     color: #fff;
     border-radius: 13px;
     height: 26px;
@@ -363,17 +367,17 @@
     background-image: -o-linear-gradient(to left, #ff4e63, #ff6cc9);
   }
 
-  .hotSale .hotSale-bd {
+  .main_box .hotSale .hotSale-bd {
     min-height: 100px;
     padding: 8px 8px 8px 8px;
   }
 
-  .searchHeader {
+  .main_box .searchHeader {
     padding: 4px 8px 4px 40px;
     border-bottom: 1px solid #aeaeae;
   }
 
-  .searchHeader input {
+  .main_box .searchHeader input {
     width: 100%;
     padding: 0 4px;
     box-sizing: border-box;
@@ -383,24 +387,29 @@
     border: 1px solid #aeaeae;
   }
 
-  .searchCon {
+  .main_box .searchCon {
     padding-top: 40px;
   }
 
-  .searchCon .nav {
+  .main_box .searchCon .nav {
     background-color: #efefef;
   }
 
-  .searchCon .box {
+  .main_box .searchCon .box {
     padding: 2px 2px 2px 40px;
     background-color: #fff;
   }
 
-  .searchCon .box .content {
+  .main_box .searchCon .box .content {
     border-top: 1px solid #aeaeae;
   }
-  .searchCon .box .el-button {
+
+  .main_box .searchCon .box .el-button {
     padding: 8px 12px;
     margin: 4px 0;
+  }
+
+  .main_box .money {
+    bottom: 0;
   }
 </style>

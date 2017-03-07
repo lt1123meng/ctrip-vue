@@ -7,13 +7,21 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import vueResource from 'vue-resource'
 import vueFinger from 'vue-finger'
+import vueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(ElementUI)
 Vue.use(vueResource)
 Vue.use(vueFinger)
+Vue.use(vueAwesomeSwiper)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  data () {
+    return {
+      BaseURI: 'http://localhost:8888/server/'
+    }
+  },
   template: '<App/>',
   components: {App}
 })
+

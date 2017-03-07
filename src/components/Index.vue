@@ -44,6 +44,7 @@
     text-align: center;
     background-color: #f4f4f4;
     box-shadow: 0 0 4px 0px #656565;
+    z-index: 4;
   }
 
   .footer span {

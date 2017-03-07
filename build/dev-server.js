@@ -1,4 +1,5 @@
 require('./check-versions')()
+var Dispatch=require('../server/dispatch')
 
 var config = require('../config');if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
@@ -6,6 +7,7 @@ var config = require('../config');if (!process.env.NODE_ENV) {
 var opn = require('opn')
 var path = require('path')
 var express = require('express')
+var bodyParser = require('body-parser')
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = process.env.NODE_ENV === 'testing'
@@ -47,6 +49,8 @@ Object.keys(proxyTable).forEach(function (context) {
   }
   app.use(proxyMiddleware(options.filter || context, options))
 })
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
@@ -72,9 +76,18 @@ module.exports = app.listen(port, function (err) {
     console.log(err)
     return
   }
-
   // when env is testing, don't need open it
   if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
     console.log('success  ---------dev-server')
   }
 })
+//解决跨域访问问题
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers','Content-Type, x-requested-with, X-Custom-Header, HaiYi-Access-Token, Authorization, Origin, Accept,_r_tk')
+  if(req.method=="OPTIONS") res.send(200);
+  else next();
+});
+Dispatch.server(app)

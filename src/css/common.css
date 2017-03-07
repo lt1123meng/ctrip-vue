@@ -57,3 +57,7 @@ a[href]{
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
+input{
+  border:0;
+  width: 100%;
+}
