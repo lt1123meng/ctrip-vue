@@ -26,6 +26,9 @@ module.exports= {
     app.get('/server/ticket/station',function(req,res){
       ticket.station(req,res)
     })
+    app.get('/server/ticket/find',function(req,res){
+      ticket.find(req,res)
+    })
   }
 }
 
