@@ -29,6 +29,12 @@ module.exports= {
     app.get('/server/ticket/find',function(req,res){
       ticket.find(req,res)
     })
+    app.get('/server/ticket/detail',function(req,res){
+      ticket.detail(req,res)
+    })
+    app.get('/server/ticket/detail/station',function(req,res){
+      ticket.detail/Station(req,res)
+    })
   }
 }
 

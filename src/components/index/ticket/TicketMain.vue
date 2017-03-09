@@ -83,17 +83,6 @@
       changeStation: function () {
         [this.startStation, this.endStation] = [this.endStation, this.startStation]
       },
-      search: function () {
-        this.$http.get(this.$root.BaseURI + 'ticket/find', {
-          params: {
-            start: this.startStation,
-            end: this.endStation
-          }
-        }).then((response) => {
-          response = response.data
-          console.log(response)
-        })
-      },
       backIndex: function () {
         this.$router.push('/index/main')
       },
@@ -127,7 +116,6 @@
           if (response.responseStatus.ack === 'success') {
             this.maskShow = false
             this.stationList = response.data.stationList
-            console.log(this)
           }
         })
       },
@@ -139,6 +127,10 @@
           this.endStation = name
         }
         this.searchShoW = false
+      },
+      search: function () {
+        console.log(this.$root.addHistory())
+        this.$router.push('/ticket/result/' + this.startStation + '/' + this.endStation)
       }
     }
   }

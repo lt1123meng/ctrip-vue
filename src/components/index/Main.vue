@@ -44,7 +44,7 @@
               <a>机票</a>
             </el-col>
             <el-col :span="8">
-              <router-link to="/ticket/main">火车票</router-link>
+              <a @click="navClick('/ticket/main')">火车票</a>
               <a>
                 特价机票
               </a>
@@ -151,7 +151,6 @@
 </template>
 
 <script>
-  import Slider from 'vue-slider/slider/Slider.vue'
   export default {
     name: 'mian',
     data () {
@@ -201,6 +200,7 @@
       })
     },
     created: function () {
+      this.$root.addHistory()
 //        监听滚动事件
       var thisVm = this
       document.onscroll = function () {
@@ -212,14 +212,13 @@
       }
     },
     methods: {
-      tap () {
+      navClick (nav) {
+        console.log(this.$root.addHistory())
+        this.$router.push(nav)
       },
       searchFocus () {
         this.search = !this.search
       }
-    },
-    components: {
-      Slider
     }
   }
 </script>

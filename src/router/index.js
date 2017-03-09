@@ -39,11 +39,11 @@ export default new Router({
           component: TicketMain
         },
         {
-          path: 'result',
+          path: 'result/:start/:end',
           component: TicketResult
         },
         {
-          path: 'detail',
+          path: 'detail/:name/:start/:end',
           component: TicketDetail
         }
 

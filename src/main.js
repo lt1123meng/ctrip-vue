@@ -21,6 +21,12 @@ new Vue({
       BaseURI: 'http://localhost:8888/server/'
     }
   },
+  methods: {
+    addHistory: function () {
+      console.log(this.$route.fullPath)
+      window.history.replaceState(null, '', '#' + this.$route.fullPath)
+    }
+  },
   template: '<App/>',
   components: {App}
 })

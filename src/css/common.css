@@ -4,7 +4,7 @@ html, body {
 
 body {
   height: 100%;
-  font-size: 14px;
+  font-size: 11pt;
   line-height: 1.5;
   font-family: Arial, "Lucida Grande", Verdana, "Microsoft YaHei", hei;
   color: #333;
@@ -19,7 +19,6 @@ body {
 body, p {
   padding: 0;
   margin: 0;
-  font-size: 11pt;
 }
 
 div, footer {
@@ -31,6 +30,49 @@ input, textarea {
   outline: none
 }
 
+._commonColor {
+  color: #3d98ff;
+}
+
+._orangeColor {
+  color: #ffbb33;
+}
+
+._commonBgColor {
+  background-color: #3d98ff;
+}
+
+._textCenter {
+  text-align: center;
+}
+
+._textRight {
+  text-align: right;
+}
+
+._size08 {
+  font-size: 0.8em;
+}
+
+._size09 {
+  font-size: 0.9em;
+}
+
+._size11 {
+  font-size: 1.1em;
+}
+
+._size12 {
+  font-size: 1.2em;
+}
+._size13 {
+  font-size: 1.3em;
+}
+
+._weightBold {
+  font-weight: bold;
+}
+
 .empty {
   width: 100%;
   height: 100%;
@@ -40,16 +82,19 @@ input, textarea {
   line-height: 100px;
   text-align: center
 }
-img{
+
+img {
   width: 100%;
 }
-a[href]{
+
+a[href] {
   text-decoration: none;
   color: #333;
   width: 100%;
   height: 100%;
   display: inline-block;
 }
+
 /*显示两行文本，超出用...代替*/
 ._twoLine {
   display: -webkit-box;
@@ -57,7 +102,8 @@ a[href]{
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
-input{
-  border:0;
+
+input {
+  border: 0;
   width: 100%;
 }
