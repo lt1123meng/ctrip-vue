@@ -78,21 +78,35 @@
       }
     },
     created: function () {
+      if (this.$root.StartStation !== '') {
+        this.startStation = this.$root.StartStation
+      }
+      if (this.$root.EndStation !== '') {
+        this.endStation = this.$root.EndStation
+      }
+      if (this.$route.params.show === '0') {
+        this.searchShoW = false
+      }
+      if (this.$route.params.show === '1') {
+        this.searchShoW = true
+      }
     },
     methods: {
       changeStation: function () {
         [this.startStation, this.endStation] = [this.endStation, this.startStation]
+        this.$root.StartStation = this.startStation
+        this.$root.EndStation = this.endStation
       },
       backIndex: function () {
-        this.$router.push('/index/main')
+        this.$router.replace('/index/main')
       },
       backMian: function () {
         this.searchBlur()
-        this.searchShoW = false
+        this.$router.replace('/ticket/main/0')
       },
       chooseStation: function (pos) {
         this.target = pos
-        this.searchShoW = !this.searchShoW
+        this.$router.push('/ticket/main/1')
       },
       searchFocus: function () {
         this.focusStyle.padding = '6px 50px 6px 6px'
@@ -123,14 +137,24 @@
         this.searchBlur()
         if (this.target === 'start') {
           this.startStation = name
+          this.$root.StartStation = name
         } else {
           this.endStation = name
+          this.$root.EndStation = name
         }
-        this.searchShoW = false
+        this.$router.replace('/ticket/main/0')
       },
       search: function () {
-        console.log(this.$root.addHistory())
         this.$router.push('/ticket/result/' + this.startStation + '/' + this.endStation)
+      }
+    },
+    watch: {
+      '$route': function (val, oldVal) {
+        if (val.fullPath === '/ticket/main/0') {
+          this.searchShoW = false
+        } else {
+          this.searchShoW = true
+        }
       }
     }
   }

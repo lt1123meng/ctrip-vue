@@ -85,7 +85,6 @@
       this.$parent.activeIndex = '2'
       this.$http.get('http://localhost:8888/server/hot/list').then((response) => {
         response = response.data
-        console.log(response)
         if (response.responseStatus.ack === 'success') {
           this.hotSaleList = response.data.hotSaleList
         }
@@ -104,7 +103,6 @@
           image: this.imgSrc
         }).then((response) => {
           response = response.data
-          console.log(response)
           if (response.responseStatus.ack === 'success') {
             this.$message({
               message: '插入成功',
@@ -120,7 +118,6 @@
         var imgFile = new FileReader()
         imgFile.readAsDataURL(event.target.files[0])
         imgFile.onload = ($this) => {
-          console.log($this.currentTarget.result)
           this.imgSrc = $this.currentTarget.result
         }
       },

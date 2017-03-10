@@ -7,6 +7,7 @@ import TicketIndex from 'components/index/ticket/TicketIndex'
 import TicketMain from 'components/index/ticket/TicketMain'
 import TicketResult from 'components/index/ticket/SearchResult'
 import TicketDetail from 'components/index/ticket/TrainDetail'
+import TrainTime from 'components/index/ticket/TrainTime'
 
 import BgIndex from 'components/BgIndex'
 import BgFirst from 'components/BgIndex/first'
@@ -35,7 +36,7 @@ export default new Router({
       component: TicketIndex,
       children: [
         {
-          path: 'main',
+          path: 'main/:show',
           component: TicketMain
         },
         {
@@ -45,6 +46,10 @@ export default new Router({
         {
           path: 'detail/:name/:start/:end',
           component: TicketDetail
+        },
+        {
+          path: 'time/:name',
+          component: TrainTime
         }
 
       ]

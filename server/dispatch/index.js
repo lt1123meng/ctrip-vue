@@ -33,7 +33,7 @@ module.exports= {
       ticket.detail(req,res)
     })
     app.get('/server/ticket/detail/station',function(req,res){
-      ticket.detail/Station(req,res)
+      ticket.detailStation(req,res)
     })
   }
 }

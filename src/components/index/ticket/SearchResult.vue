@@ -2,7 +2,7 @@
   <div class="ticket_result">
     <div class="header">
       <div class="title">
-        <span class="back el-icon-arrow-left"></span>
+        <span @click="back" class="back el-icon-arrow-left"></span>
         <div>
           <span @click="changeStation">
             <span v-text="startStation"></span>
@@ -61,7 +61,6 @@
       }
     },
     created: function () {
-      console.log(this)
       this.startStation = this.$route.params.start
       this.endStation = this.$route.params.end
       this.findResult()
@@ -87,8 +86,10 @@
         [this.startStation, this.endStation] = [this.endStation, this.startStation]
       },
       goDetail: function (name) {
-        console.log(this.$root.addHistory())
         this.$router.push('/ticket/detail/' + name + '/' + this.startStation + '/' + this.endStation)
+      },
+      back () {
+        this.$router.go(-1)
       }
     },
     filters: {
@@ -103,8 +104,6 @@
         }
         first = parseInt(first[0]) * 60 + parseInt(first[1])
         second = parseInt(second[0]) * 60 + parseInt(second[1])
-        console.log(first)
-        console.log(second)
         return parseInt((second - first) / 60) + '时' + parseInt((second - first) % 60) + '分'
       }
     }
@@ -115,6 +114,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .ticket_result .header {
+    z-index: 1;
     background-color: #3d98ff;
     color: #fff;
   }
@@ -130,6 +130,7 @@
   }
 
   .ticket_result .header .title .back {
+    z-index: 2;
     position: absolute;
     top: 12px;
     left: 12px;

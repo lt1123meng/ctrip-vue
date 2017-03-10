@@ -18,12 +18,13 @@ new Vue({
   router,
   data () {
     return {
-      BaseURI: 'http://localhost:8888/server/'
+      BaseURI: 'http://localhost:8888/server/',
+      StartStation: '',
+      EndStation: ''
     }
   },
   methods: {
     addHistory: function () {
-      console.log(this.$route.fullPath)
       window.history.replaceState(null, '', '#' + this.$route.fullPath)
     }
   },

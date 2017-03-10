@@ -44,7 +44,7 @@
               <a>机票</a>
             </el-col>
             <el-col :span="8">
-              <a @click="navClick('/ticket/main')">火车票</a>
+              <a @click="navClick('/ticket/main/0')">火车票</a>
               <a>
                 特价机票
               </a>
@@ -194,7 +194,6 @@
         response = response.data
         if (response.responseStatus.ack === 'success') {
           this.hotSale = response.data.hotSaleList
-          console.log(this.hotSale)
         }
       }, response => {
       })
@@ -213,7 +212,6 @@
     },
     methods: {
       navClick (nav) {
-        console.log(this.$root.addHistory())
         this.$router.push(nav)
       },
       searchFocus () {
