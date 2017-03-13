@@ -38,6 +38,10 @@ input, textarea {
   color: #ffbb33;
 }
 
+._greyColor {
+  color: #ccc;
+}
+
 ._commonBgColor {
   background-color: #3d98ff;
 }
@@ -65,6 +69,7 @@ input, textarea {
 ._size12 {
   font-size: 1.2em;
 }
+
 ._size13 {
   font-size: 1.3em;
 }

@@ -4,11 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
+import MintUI from 'mint-ui'
 import 'element-ui/lib/theme-default/index.css'
+import 'mint-ui/lib/style.min.css'
 import vueResource from 'vue-resource'
 import vueFinger from 'vue-finger'
 import vueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(ElementUI)
+Vue.use(MintUI)
 Vue.use(vueResource)
 Vue.use(vueFinger)
 Vue.use(vueAwesomeSwiper)
