@@ -1,6 +1,6 @@
 <template>
   <div class="main_box">
-    <div v-if="search">
+    <div>
       <header class="header" :style="{ backgroundColor:bgColor }">
         <span class="scanning el-icon-menu" :style="{ color:iconColor }"></span>
         <span class="message el-icon-menu" :style="{ color:iconColor }"></span>
@@ -105,48 +105,50 @@
         </div>
       </div>
     </div>
-    <div v-if="!search">
-      <header class="header searchHeader">
-        <span @click="searchFocus()" class="scanning el-icon-arrow-left"></span>
-        <input type="text" placeholder="搜索目的地/景点">
-      </header>
-      <div class="searchCon">
-        <div class="nav">
-          <span>搜索推荐</span>
-        </div>
-        <div class="box">
-          <span class="sign"></span>
-          <div class="content">
-            <el-button>酒店</el-button>
-            <el-button>机票</el-button>
-            <el-button>火车票</el-button>
-            <el-button>渡假</el-button>
-            <el-button>攻略</el-button>
+    <transition enter-active-class="animated moveInRight" leave-active-class="animated moveOutRight">
+      <div v-if="!search" class="search_box">
+        <header class="header searchHeader">
+          <span @click="searchFocus()" class="scanning el-icon-arrow-left"></span>
+          <input type="text" placeholder="搜索目的地/景点">
+        </header>
+        <div class="searchCon">
+          <div class="nav">
+            <span>搜索推荐</span>
           </div>
-        </div>
-        <div class="box">
-          <span class="sign"></span>
-          <div class="content">
-            <el-button>香港的酒店</el-button>
-            <el-button>三亚的酒店</el-button>
-            <el-button>石家庄的酒店</el-button>
-            <el-button>上海的酒店</el-button>
-            <el-button>北京的酒店</el-button>
+          <div class="box">
+            <span class="sign"></span>
+            <div class="content">
+              <el-button>酒店</el-button>
+              <el-button>机票</el-button>
+              <el-button>火车票</el-button>
+              <el-button>渡假</el-button>
+              <el-button>攻略</el-button>
+            </div>
           </div>
-        </div>
-        <div class="box">
-          <span class="sign"></span>
-          <div class="content">
-            <el-button>石家庄跟团游</el-button>
-            <el-button>石家庄自由行</el-button>
-            <el-button>石家庄景点门票</el-button>
-            <el-button>石家庄一日游</el-button>
-            <el-button>迪士尼游玩</el-button>
-            <el-button>三亚旅游</el-button>
+          <div class="box">
+            <span class="sign"></span>
+            <div class="content">
+              <el-button>香港的酒店</el-button>
+              <el-button>三亚的酒店</el-button>
+              <el-button>石家庄的酒店</el-button>
+              <el-button>上海的酒店</el-button>
+              <el-button>北京的酒店</el-button>
+            </div>
+          </div>
+          <div class="box">
+            <span class="sign"></span>
+            <div class="content">
+              <el-button>石家庄跟团游</el-button>
+              <el-button>石家庄自由行</el-button>
+              <el-button>石家庄景点门票</el-button>
+              <el-button>石家庄一日游</el-button>
+              <el-button>迪士尼游玩</el-button>
+              <el-button>三亚旅游</el-button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -367,6 +369,14 @@
   .main_box .hotSale .hotSale-bd {
     min-height: 100px;
     padding: 8px 8px 8px 8px;
+  }
+
+  .main_box .search_box {
+    background-color: #fff;
+    z-index: 2;
+    position: fixed;
+    top: 0;
+    height: 100%;
   }
 
   .main_box .searchHeader {

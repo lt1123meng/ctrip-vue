@@ -48,7 +48,7 @@ export default new Router({
           component: TicketDetail
         },
         {
-          path: 'time/:name',
+          path: 'time/:name/:start/:end',
           component: TrainTime
         }
 

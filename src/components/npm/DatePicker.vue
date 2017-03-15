@@ -1,9 +1,9 @@
 <template>
   <div class="date_picker">
     <div class="datepPickerBox" @click="goChooseDate">
-      <div class="time"><span class="chooseTime" v-text="date.time"></span></el-col></div>
+      <div class="time"><span class="chooseTime" v-text="option.time"></span></el-col></div>
       <div class="week">
-        <span class="chooseWeek" v-text="date.week"></span>
+        <span class="chooseWeek" v-text="option.week"></span>
         <span class="chooseWeek el-icon-arrow-right"></span>
       </div>
     </div>
@@ -22,8 +22,17 @@
       </div>
       <div class="content">
         <div class="box" v-for="dayItem in daysList">
+          <div class="title">
+            <span v-text="dayItem.year"></span>年
+            <span v-text="dayItem.month"></span>月
+          </div>
           <div class="day">
-            <div class="item" :class="{_greyColor:!item.isChoose}" v-for="item in dayItem.day" v-text="item.text"></div>
+            <div class="item" :class="{_greyColor:!item.isChoose,chooseThis:item.chooseThis}"
+                 v-for="item in dayItem.day"
+                 @click="chooseDate(item.moment)">
+              <span  v-text="item.text"></span>
+              <span v-if="item.chooseThis" class="start">出发</span>
+            </div>
           </div>
         </div>
       </div>
@@ -43,21 +52,21 @@
       }
     },
     props: {
-      date: {
+      option: {
+        type: Object,
         default: function () {
           return {
+            format: 'YY-MM-DD',
             time: moment().format('YY年MM月DD日'),
             week: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][parseInt(moment().day())]
           }
         }
-      },
-      option: {
-        default: function () {
-          return {
-            text: 'text',
-            type: 'day'
-          }
-        }
+      }
+    },
+    created: function () {
+      if (!this.option.time) {
+        this.option.time = moment().format(this.option.format)
+        this.option.week = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][parseInt(moment().day())]
       }
     },
     methods: {
@@ -72,29 +81,26 @@
         this.currentMoment = moment()
         var first = true
         var daysList = []
+
+//        年信息
         var year = this.currentMoment.year()
-//      获取这个月的信息
-        var month = ''
-//      今天
-        var dayIndex = ''
-//        这个月的天数
-        var monthDays = ''
-//        本月的第一天是星期几
-        var dayFirstWeek = ''
+//      获取这个月的信息，今天，这个月的天数，本月的第一天是星期几
+        var month, dayIndex, monthDays, dayFirstWeek
         var dayObj = []
-        goNextMonth(this)
-        function goNextMonth (thisVm) {
+
+        var selectTime = moment(this.option.time, this.option.format)
+        var Syear = selectTime.year()
+        var Smonth = selectTime.month() + 1
+        var SdayIndex = selectTime.date()
+
+        var goNextMonth = function (thisVm) {
           year = thisVm.currentMoment.year()
-//        获取这个月的信息
           month = thisVm.currentMoment.month() + 1
-//        这个月的天数
           monthDays = thisVm.currentMoment.daysInMonth()
           if (first) {
             dayIndex = thisVm.currentMoment.date()
           }
-//        本月的第一天是星期几
           dayFirstWeek = thisVm.currentMoment.date(1).day()
-          console.log(dayIndex)
           dayObj = {
             year: year,
             month: month,
@@ -103,18 +109,24 @@
           for (let i = 0; i < dayFirstWeek; i++) {
             dayObj.day.push({
               text: '',
-              isChoose: false
+              isChoose: false,
+              chooseThis: false
             })
           }
           for (let i = 0; i < monthDays; i++) {
             var isChoose = true
+            var chooseThis = false
             if ((first && i < dayIndex - 1) || (!first && thisVm.buyDays < 0)) {
               isChoose = false
+            }
+            if (Syear === year && Smonth === month && SdayIndex === i + 1) {
+              chooseThis = true
             }
             dayObj.day.push({
               text: i + 1,
               isChoose: isChoose,
-              moment: thisVm.currentMoment.date(i + 1).format('YYYY-MM-DD')
+              moment: thisVm.currentMoment.date(i + 1).format(thisVm.option.format),
+              chooseThis: chooseThis
             })
             if (isChoose) {
               thisVm.buyDays--
@@ -124,12 +136,19 @@
           first = false
           if (thisVm.buyDays < 0) {
             thisVm.daysList = daysList
-            console.log(thisVm.daysList)
+            thisVm.buyDays = 60
           } else {
             thisVm.currentMoment.add(1, 'M')
             goNextMonth(thisVm)
           }
         }
+        goNextMonth(this)
+      },
+      chooseDate: function (dateTime) {
+        this.option.time = dateTime
+        this.option.week = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][parseInt(moment(dateTime, this.option.format).day())]
+        this.$emit('getdate', dateTime)
+        this.showChoose = false
       }
     }
   }
@@ -190,7 +209,6 @@
   .date_picker .datePickerOverlay .nav .weekNameBox {
     line-height: 24px;
     background-color: #f3f3f3;
-    border-bottom: 0.5px solid #eeeeee;
   }
 
   .date_picker .datePickerOverlay .nav .weekNameBox .weekItem {
@@ -201,12 +219,31 @@
   }
 
   .date_picker .datePickerOverlay .content {
-    padding-top: 71px;
+    padding-top: 70px;
   }
 
+  .date_picker .datePickerOverlay .content .box .title {
+    text-align: center;
+    border-top: 1px solid #f3f3f3;
+  }
   .date_picker .datePickerOverlay .content .day .item {
     display: inline-block;
     width: 14.28%;
     text-align: center;
+  }
+
+  .date_picker .datePickerOverlay .content .day .item.chooseThis {
+    background-color: #1c8de0;
+    color: #fff;
+    font-size: 22px;
+  }
+
+  .date_picker .datePickerOverlay .content .day .item.chooseThis .start {
+    position: absolute;
+    font-size: 12px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    line-height: 80px;
   }
 </style>
