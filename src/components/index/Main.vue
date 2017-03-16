@@ -20,61 +20,61 @@
         <div class="navBox">
           <el-row>
             <el-col :span="8">
-              <a>酒店</a>
+              <a class="two" @click="navClick($event)">酒店</a>
             </el-col>
             <el-col :span="8">
-              <a>
+              <a @click="navClick($event)">
                 海外酒店
               </a>
-              <a>
+              <a @click="navClick($event)">
                 特价酒店
               </a>
             </el-col>
             <el-col :span="8">
-              <a>
+              <a @click="navClick($event)">
                 团购
               </a>
-              <a>
+              <a @click="navClick($event)">
                 民宿·客栈
               </a>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="8">
-              <a>机票</a>
+              <a class="two" @click="navClick($event)">机票</a>
             </el-col>
             <el-col :span="8">
-              <a @click="navClick('/ticket/main/0')">火车票</a>
-              <a>
+              <a @click="navClick($event,'/ticket/main/0')">火车票</a>
+              <a @click="navClick($event)">
                 特价机票
               </a>
             </el-col>
             <el-col :span="8">
-              <a>
+              <a @click="navClick($event)">
                 汽车票·船票
               </a>
-              <a>
+              <a @click="navClick($event)">
                 专车·租车
               </a>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="8">
-              <a>旅游</a>
+              <a class="two" @click="navClick($event)">旅游</a>
             </el-col>
             <el-col :span="8">
-              <a>
+              <a @click="navClick($event)">
                 目的地攻略
               </a>
-              <a>
+              <a @click="navClick($event)">
                 周边游
               </a>
             </el-col>
             <el-col :span="8">
-              <a>
+              <a @click="navClick($event)">
                 游轮
               </a>
-              <a>
+              <a @click="navClick($event)">
                 定制旅行
               </a>
             </el-col>
@@ -213,8 +213,23 @@
       }
     },
     methods: {
-      navClick (nav) {
-        this.$router.push(nav)
+      navClick (event, nav) {
+        window.Velocity(
+          event.target, {
+            scale: '0.9'
+          }, {
+            during: 600,
+            complete: function (element) {
+              window.Velocity(
+                element, {
+                  scale: '1'
+                }, {
+                  during: 600,
+                  delay: 1000
+                })
+            }
+          })
+        if (nav) this.$router.push(nav)
       },
       searchFocus () {
         this.search = !this.search
@@ -294,17 +309,18 @@
   .main_box .contentBox .navBox .el-row {
     border-radius: 5px;
     margin-bottom: 4px;
+    overflow: hidden;
   }
 
-  .main_box .contentBox .navBox .el-row:nth-child(1) {
+  .main_box .contentBox .navBox .el-row:nth-child(1) a {
     background-color: #ff697a;
   }
 
-  .main_box .contentBox .navBox .el-row:nth-child(2) {
+  .main_box .contentBox .navBox .el-row:nth-child(2) a {
     background-color: #3d98ff;
   }
 
-  .main_box .contentBox .navBox .el-row:nth-child(3) {
+  .main_box .contentBox .navBox .el-row:nth-child(3) a {
     background-color: #fc9720;
   }
 
@@ -325,6 +341,11 @@
     line-height: 45px;
     display: block;
     font-size: 1em;
+  }
+
+  .main_box .contentBox .navBox .two {
+    height: 91px;
+    line-height: 91px;
   }
 
   /*特卖区域*/

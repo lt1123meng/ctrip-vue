@@ -10,12 +10,16 @@
       </el-row>
       <div class="searchBox">
         <el-row class="address">
+          <span id="start" v-text="startStation"></span>
+          <span id="end" v-text="endStation"></span>
           <el-col :span="10" class="left">
-            <div @click="chooseStation('start')" v-text="startStation"></div>
+            <div @click="chooseStation('start')">
+            </div>
           </el-col>
-          <el-col :span="4"><img @click="changeStation" src="images/change.png" alt=""></el-col>
+          <el-col :span="4"><img @click="changeStation($event)" src="images/change.png" alt=""></el-col>
           <el-col :span="10" class="right">
-            <div @click="chooseStation('end')" v-text="endStation"></div>
+            <div @click="chooseStation('end')">
+            </div>
           </el-col>
         </el-row>
         <el-row class="time">
@@ -58,6 +62,7 @@
   export default{
     data () {
       return {
+        rotateZ: 0,
         target: '',
         searchShoW: false,
         startStation: '北京西',
@@ -84,9 +89,13 @@
     created: function () {
       if (this.$root.StartStation !== '') {
         this.startStation = this.$root.StartStation
+      } else {
+        this.$root.StartStation = this.startStation
       }
       if (this.$root.EndStation !== '') {
         this.endStation = this.$root.EndStation
+      } else {
+        this.$root.EndStation = this.endStation
       }
       if (this.$route.params.show === '0') {
         this.searchShoW = false
@@ -96,10 +105,44 @@
       }
     },
     methods: {
-      changeStation: function () {
-        [this.startStation, this.endStation] = [this.endStation, this.startStation]
-        this.$root.StartStation = this.startStation
-        this.$root.EndStation = this.endStation
+      changeStation: function (event) {
+        [this.$root.StartStation, this.$root.EndStation] = [this.$root.EndStation, this.$root.StartStation]
+        this.rotateZ += 180
+        window.Velocity(
+          event.target,
+          {
+            rotateZ: this.rotateZ + 'deg'
+          },
+          {
+            duration: 600
+          }
+        )
+        window.Velocity(
+          document.getElementById('start'),
+          this.rotateZ / 180 % 2 === 1 ? {right: 0} : {left: 0},
+          {
+            duration: 600,
+            complete: (element) => {
+              if (this.rotateZ / 180 % 2 === 0) {
+                element[0].style.left = 'auto'
+                element[0].style.right = 'auto'
+              }
+            }
+          }
+        )
+        window.Velocity(
+          document.getElementById('end'),
+          this.rotateZ / 180 % 2 === 0 ? {right: 0} : {left: 'auto'},
+          {
+            duration: 600,
+            complete: (element) => {
+              if (this.rotateZ / 180 % 2 === 1) {
+                element[0].style.left = 'auto'
+                element[0].style.right = 'auto'
+              }
+            }
+          }
+        )
       },
       backIndex: function () {
         this.$router.replace('/index/main')
@@ -140,16 +183,26 @@
       stationResult: function (name) {
         this.searchBlur()
         if (this.target === 'start') {
-          this.startStation = name
-          this.$root.StartStation = name
+          if (this.rotateZ / 180 % 2 === 0) {
+            this.startStation = name
+            this.$root.StartStation = name
+          } else {
+            this.endStation = name
+            this.$root.EndStation = name
+          }
         } else {
-          this.endStation = name
-          this.$root.EndStation = name
+          if (this.rotateZ / 180 % 2 === 1) {
+            this.startStation = name
+            this.$root.StartStation = name
+          } else {
+            this.endStation = name
+            this.$root.EndStation = name
+          }
         }
         this.$router.replace('/ticket/main/0')
       },
       search: function () {
-        this.$router.push('/ticket/result/' + this.startStation + '/' + this.endStation)
+        this.$router.push('/ticket/result/' + this.$root.StartStation + '/' + this.$root.EndStation)
       },
       getDate: function (time) {
         this.date = time
@@ -242,6 +295,17 @@
 
   .ticket_main .searchBox .el-button {
     width: 100%;
+  }
+
+  .ticket_main #start {
+    position: absolute;
+    top: 0;
+  }
+
+  .ticket_main #end {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
   .ticket_main .searchBox .el-row {

@@ -29,8 +29,8 @@
           <div class="day">
             <div class="item" :class="{_greyColor:!item.isChoose,chooseThis:item.chooseThis}"
                  v-for="item in dayItem.day"
-                 @click="chooseDate(item.moment)">
-              <span  v-text="item.text"></span>
+                 @click="chooseDate(item.moment,item.isChoose)">
+              <span v-text="item.text"></span>
               <span v-if="item.chooseThis" class="start">出发</span>
             </div>
           </div>
@@ -48,7 +48,37 @@
         weekName: ['日', '一', '二', '三', '四', '五', '六'],
         daysList: [],
         buyDays: 60,
-        currentMoment: ''
+        currentMoment: '',
+        sFtv: {
+          '0101': '元旦',
+          '0214': '情人节',
+          '0308': '妇女节',
+          '0312': '植树节',
+          '0401': '愚人节',
+          '0501': '劳动节',
+          '0504': '青年节',
+          '0512': '护士节',
+          '0601': '儿童节',
+          '0701': '建党节',
+          '0801': '建军节',
+          '0910': '教师节',
+          '1001': '国庆节',
+          '1006': '老人节',
+          '1024': '联合国日',
+          '1224': '平安夜',
+          '1225': '圣诞节'
+        },
+        lFtv: {
+          '0101': '春节',
+          '0115': '元宵节',
+          '0505': '端午节',
+          '0707': '七夕情人节',
+          '0715': '中元节',
+          '0815': '中秋节',
+          '0909': '重阳节',
+          '1208': '腊八节',
+          '1224': '小年'
+        }
       }
     },
     props: {
@@ -92,7 +122,13 @@
         var Syear = selectTime.year()
         var Smonth = selectTime.month() + 1
         var SdayIndex = selectTime.date()
-
+        var getDouble = function (val) {
+          if (val.length === 1) {
+            return '0' + val
+          } else {
+            return val
+          }
+        }
         var goNextMonth = function (thisVm) {
           year = thisVm.currentMoment.year()
           month = thisVm.currentMoment.month() + 1
@@ -116,14 +152,18 @@
           for (let i = 0; i < monthDays; i++) {
             var isChoose = true
             var chooseThis = false
+            var holiday = ''
             if ((first && i < dayIndex - 1) || (!first && thisVm.buyDays < 0)) {
               isChoose = false
             }
             if (Syear === year && Smonth === month && SdayIndex === i + 1) {
               chooseThis = true
             }
+            if (thisVm.sFtv[getDouble(month + '') + getDouble(i + 1 + '')]) {
+              holiday = thisVm.sFtv[getDouble(month + '') + getDouble(i + 1 + '')]
+            }
             dayObj.day.push({
-              text: i + 1,
+              text: !holiday ? i + 1 : holiday,
               isChoose: isChoose,
               moment: thisVm.currentMoment.date(i + 1).format(thisVm.option.format),
               chooseThis: chooseThis
@@ -144,7 +184,10 @@
         }
         goNextMonth(this)
       },
-      chooseDate: function (dateTime) {
+      chooseDate: function (dateTime, choose) {
+        if (!choose) {
+          return
+        }
         this.option.time = dateTime
         this.option.week = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][parseInt(moment(dateTime, this.option.format).day())]
         this.$emit('getdate', dateTime)
@@ -226,6 +269,7 @@
     text-align: center;
     border-top: 1px solid #f3f3f3;
   }
+
   .date_picker .datePickerOverlay .content .day .item {
     display: inline-block;
     width: 14.28%;
@@ -246,4 +290,5 @@
     width: 100%;
     line-height: 80px;
   }
+
 </style>

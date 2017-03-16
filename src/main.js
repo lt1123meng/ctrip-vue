@@ -15,6 +15,7 @@ Vue.use(MintUI)
 Vue.use(vueResource)
 Vue.use(vueFinger)
 Vue.use(vueAwesomeSwiper)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
