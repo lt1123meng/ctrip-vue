@@ -1,3 +1,4 @@
+// 一些工具loder
 var utils = require('./utils')
 var webpack = require('webpack')
 var config = require('../config')
@@ -10,6 +11,8 @@ var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
 })
+//entry: { app: [ './build/dev-client', './src/main.js' ]
+
 
 module.exports = merge(baseWebpackConfig, {
   module: {
@@ -26,8 +29,8 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'index.html',
+      filename: 'main.html',
+      template: 'main.html',
       inject: true
     }),
     new FriendlyErrorsPlugin()
